@@ -1,4 +1,5 @@
 // this is a RAM + MAR module for SUP-1
+`timescale 1ns/1ps
 
 module ram(inout bus, input ro, input ri, input mi, input clk, input rst)
     reg[7:0] data [3:0];

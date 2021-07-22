@@ -2,6 +2,7 @@
 // it will include the flags register, instruction register,
 // step counter and microinstruction ROM's 
 
+`timescale 1ns/1ps
 module control(
     input carry,
     input zero,
@@ -27,10 +28,14 @@ module control(
     reg[2:0] step_counter;
     reg[7:0] instruction_register;
     reg[1:0] flags_register;
+    reg [15:0] control_word_key [8:0];
     initial begin
         step_counter = 0;
         control_word = 0;
         instruction_register = 0;
+
+        /////WRITING CONTROL WORD KEY//////
+        $readmemh("control word key.mem", control_word_key);
     end
     /////////ASSIGNING CONTROL SIGNALS//////////
     
@@ -77,4 +82,11 @@ module control(
             flags_register[1] = carry;
         end
     end
+
+    //////LOGIC ROM's//////////
+    reg[8:0] logic_address;
+    assign logic_address[0+:3] = step_counter;
+    assign logic_address[3+:4] = instruction_register[4+:4];
+    assign logic_address[7+:2] = flags_register;
+
 endmodule

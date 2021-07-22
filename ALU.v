@@ -3,15 +3,16 @@
 // - [ ] subtract the two numbers if SUB is enabled
 // - [ ] output to bus if SO is enabled, output high-impedance otherwise
 
+`timescale 1ns/1ps
 module alu(
     inout[7:0] bus, 
     input sub, 
     input so, 
     input[7:0] a, b,
-    output carry)
+    output carry, zero)
     reg[7:0] res;
     assign res = sub ? a-b : a+b;
     assign bus = so ? res : 8'bz;
     assign carry = (sub ? a-b : a+b) > 255;
-
+     
 endmodule

@@ -5,9 +5,10 @@
 // - [ ] output to bus if CO is enabled, output high-impedance otherwise
 // - [ ] take data in from bus if jmp is enabled
 // - [ ] reset data when rst is high
+`timescale 1ns/1ps
 module counter (
     parameter width,
-    inout[0:width-1] bus, 
+    inout[width-1:0] bus, 
     input ce, 
     input co,
     input jmp,
@@ -15,7 +16,7 @@ module counter (
     input clk,
     input rst
 )
-    reg[0:width-1] data = 0;
+    reg[width-1:0] data = 0;
     assign bus = co ? data : 8'bZ;
     assign data = jmp ? bus : data;
     
